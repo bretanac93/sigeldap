@@ -14,18 +14,15 @@ Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 
 let routes = [
-	{ path: '/', component: Home },
-	{ path: '/login', component: Login },
-	// Redirections
-	{ path: '*', redirect: '/home' }
+	{ path: '/home', component: Home, title: 'Inicio' },
+	{ path: '/login', component: Login, title: 'Acceder' }
 ];
 
-let router = new VueRouter({
-	routes
+export let router = new VueRouter({
+	routes,
+	saveScrollPosition: true,
+  	history: true
 });
-
-
-// Vue.component('app-login', require('./components/Login.vue'));
 
 const app = new Vue({
 	router

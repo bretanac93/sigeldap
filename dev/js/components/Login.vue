@@ -8,12 +8,12 @@
 	                    alt="">
 	                <div class="form-signin">
 		                <div class="form-group">
-		                	<input type="text" class="form-control" placeholder="Nombre de usuario" required autofocus v-model="user">
+		                	<input type="text" class="form-control" placeholder="Nombre de usuario" required autofocus v-model="credentials.user">
 		                </div>
 		                <div class="form-group">
-		                	<input type="password" class="form-control" placeholder="Contraseña" required v-model="pass">
+		                	<input type="password" class="form-control" placeholder="Contraseña" required v-model="credentials.pass">
 		                </div>
-		                <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="login">Acceder</button>
+		                <button class="btn btn-lg btn-primary btn-block" type="submit" @click="submit()">Acceder</button>
 	                </div>
 	            </div>
 	        </div>
@@ -22,38 +22,26 @@
 </template>
 
 <script>
+	import auth from '../auth';
+
 	export default {
 		
 		data() {
 			return {
-				user: '',
-				pass: '',
-				login: () => {
-					this.axios.post('/api/auth', {
-						user: this.user,
-						pass: this.pass
-					})
-					.then(success => {
-						console.log(success.data);
-						localStorage.setItem('token', success.data);
-
-						this.axios.get('/api/uinf', {
-							headers: { 'Auth': localStorage.getItem('token') }
-						})
-						.then(success => {
-							console.log(success);
-						})
-						.catch(error => {
-							console.log(error);
-						});
-
-
-					})
-					.catch(error => {
-						console.log(error);
-						alert('Error');
-					})
+				credentials: {
+					user: '',
+					pass: ''
+				},
+				error: ''
+			}
+		},
+		methods: {
+			submit() {
+				let credentials = {
+					user: this.credentials.user,
+					pass: this.credentials.pass
 				}
+				auth.login(this, credentials, '/#/');
 			}
 		}
 	}
