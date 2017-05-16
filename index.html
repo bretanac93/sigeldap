@@ -22,10 +22,12 @@
 
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav navbar-right">
-			        <li><a href="#">Inicio</a></li>
-			        <li><a href="#">Pendientes</a></li>
-			        <li><a href="#">Procesados</a></li>
-			        <li><a href="#">Usuario</a></li>
+			        <router-link tag="li" to="/" exact v-if="isAuth"><a>Pendientes</a></router-link>
+			        <router-link tag="li" to="/" exact v-if="isAuth"><a>Registros</a></router-link>
+			        <router-link tag="li" to="/" exact v-if="isAuth"><a>Propuestos</a></router-link>
+
+			        <router-link tag="li" to="/login" exact v-if="!isAuth"><a>Acceder</a></router-link>
+			        <li v-if="isAuth"><a href="#" @click="logout">Salir</a></li>
 			      </ul>
 			    </div>
 			  </div>
