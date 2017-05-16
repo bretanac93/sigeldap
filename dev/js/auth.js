@@ -19,9 +19,8 @@ export default {
 			localStorage.setItem('username', data.username);
 			localStorage.setItem('name', data.name);
 
-			if (redirect) {
-				router.go(redirect);
-			}
+			router.push(redirect);
+			window.location.reload();
 		})
 		.catch(error => {
 			console.log(error);
@@ -33,16 +32,11 @@ export default {
 		localStorage.removeItem('token');
 		this.user = {};
 		this.user.authenticated = false;
+		window.location.reload();
 	},
 
-	checkAuth() {
-		let jwt = localStorage.getItem('token');
-		if (jwt) {
-			this.user.authenticated = true;
-		}
-		else {
-			this.user.authenticated = false;
-		}
+	isAuth() {
+		return localStorage.getItem('token') !== null;
 	},
 
 	getAuthHeader() {
